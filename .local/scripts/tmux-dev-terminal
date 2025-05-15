@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if ! tmux has-session -t="dev-terminal" 2> /dev/null; then
+
+	tmux new-session -ds "dev-terminal" -c "$HOME" -n "postman"
+	tmux send-keys -t "dev-terminal:postman" "postrun" C-m
+	# tmux new-window -t "dev-terminal" -n "mongo3t"
+	# tmux send-keys -t "dev-terminal:mongo3t" "mongo3t" C-m
+	tmux new-window -t "dev-terminal" -n "terminal"
+	tmux send-keys -t "dev-terminal:terminal" "drcrampas" C-m
+	tmux select-window -t "dev-terminal:terminal"
+
+fi
+
+if [[ -n $TMUX ]]; then
+
+	tmux switch-client -t "dev-terminal:terminal"
+else
+
+	tmux a -t "dev-terminal:terminal"
+fi

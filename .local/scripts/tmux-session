@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    SELECTED_FIND=$1
+else
+    SELECTED_FIND=$(find ~/internal-projects ~/crampas-projects ~/ ~/.config ~/.local/scripts ~/.local -mindepth 1 -maxdepth 2 -type d | fzf)
+fi
+
+if [[ -z $SELECTED_FIND ]]; then
+    exit 0
+fi
+
+SESSION_NAME=$(basename "$SELECTED_FIND" | tr . _)
+
+if ! tmux has-session -t=$SESSION_NAME 2> /dev/null; then
+    tmux new-session -ds $SESSION_NAME -c $SELECTED_FIND
+fi
+
+if [[ -n $TMUX ]]; then
+	tmux switch-client -t $SESSION_NAME
+else
+	tmux attach-session -t $SESSION_NAME
+fi
