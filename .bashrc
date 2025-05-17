@@ -16,6 +16,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if [ -f "$HOME/.bash_local" ]; then
+	source "$HOME/.bash_local"
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -33,8 +37,10 @@ if [ -d "$HOME/.cargo" ]; then
 	fi
 fi
 
-export PATH="$PATH:/opt/nvim-linux64/bin"
+# export PATH="$PATH:/opt/nvim-linux64/bin"
 
+
+alias run-nvidia='__GLX_VENDOR_LIBRARY_NAME=nvidia __NV_PRIME_RENDER_OFFLOAD=1'
 alias sudo="sudo "
 alias py310="sudo update-alternatives --set python3 /usr/bin/python3.10"
 alias py311="sudo update-alternatives --set python3 /usr/bin/python3.11"
@@ -44,7 +50,7 @@ uvs(){
 	uvicorn main:app --reload --port "$1"
 }
 
-[[ -s "/home/zhuanpop/.gvm/scripts/gvm" ]] && source "/home/zhuanpop/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

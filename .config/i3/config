@@ -34,7 +34,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-exec --no-startup-id xrandr --output eDP-1-0 --auto --left-of HDMI-0
+exec --no-startup-id "$HOME/.config/polybar/launch.sh"
+
+exec --no-startup-id xrandr --output HDMI-1-0 --right-of eDP-1 --auto
 
 # Screenshots
 bindsym Print exec --no-startup-id maim --window $(xdotool getactivewindow) "$HOME/Pictures/Screenshots/Screenshots from $(date '+%Y-%m-%d %H-%M-%S').png"
@@ -61,7 +63,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id rofi -show drun
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -149,8 +151,8 @@ bindsym $mod+0 workspace number $ws10
 
 
 
-bindsym $mod+Control+1 exec "google-chrome"; workspace 1: Entertainment
-bindsym $mod+Control+2 exec "google-chrome"; workspace 2: Working Web
+bindsym $mod+Control+1 exec "google-chrome-stable"; workspace 1: Entertainment
+bindsym $mod+Control+2 exec "google-chrome-stable"; workspace 2: Working Web
 bindsym $mod+Control+3 exec "kitty --class 'kitty,space3'"; workspace 3: Terminal Main
 bindsym $mod+Control+4 exec "kitty --hold postrun -i -c"; workspace 4: Utilities
 
@@ -203,14 +205,14 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3status
-}
+#bar {
+#        status_command i3status
+#}
 
-workspace 1 output primary
-workspace 2 output eDP-1-0
-workspace 3 output primary
-workspace 4 output eDP-1-0
+workspace 1 output HDMI-1-0
+workspace 2 output eDP-1
+workspace 3 output HDMI-1-0
+workspace 4 output eDP-1
 
 
 for_window [class="space1"] move container to workspace 1
