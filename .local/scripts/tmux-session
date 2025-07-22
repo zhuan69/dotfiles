@@ -14,10 +14,12 @@ SESSION_NAME=$(basename "$SELECTED_FIND" | tr . _)
 
 if ! tmux has-session -t=$SESSION_NAME 2> /dev/null; then
     tmux new-session -ds $SESSION_NAME -c $SELECTED_FIND
+	tmux send-keys -t $SESSION_NAME "nvim ." C-m
 fi
 
 if [[ -n $TMUX ]]; then
 	tmux switch-client -t $SESSION_NAME
 else
 	tmux attach-session -t $SESSION_NAME
+	tmux send-keys -t $SESSION_NAME "nvim ." C-m
 fi
