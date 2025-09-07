@@ -39,8 +39,16 @@ fi
 
 export PATH="$PATH:/usr/nvim-linux-x86_64/bin"
 
+if lspci | grep -qi NVIDIA; then
+	export __GLX_VENDOR_LIBRARY_NAME=nvidia __NV_PRIME_RENDER_OFFLOAD=1
+	export LIBVA_DRIVER_NAME=nvidia
+	export VDPAU_DRIVER=nvidia
+else
+	export LIBVA_DRIVER_NAME=radeonsi
+	export VDPAU_DRIVER=radeonsi
+fi
 
-alias run-nvidia='__GLX_VENDOR_LIBRARY_NAME=nvidia __NV_PRIME_RENDER_OFFLOAD=1'
+#alias run-nvidia='__GLX_VENDOR_LIBRARY_NAME=nvidia __NV_PRIME_RENDER_OFFLOAD=1'
 alias sudo="sudo "
 alias py310="sudo update-alternatives --set python3 /usr/bin/python3.10"
 alias py311="sudo update-alternatives --set python3 /usr/bin/python3.11"
@@ -87,7 +95,7 @@ devterminal(){
 goRunWatch(){
 	nodemon --exec go run $(pwd)/main.go --signal SIGTERM
 }
-
+eval "$(pyenv init -)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
